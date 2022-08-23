@@ -135,8 +135,7 @@ order by round(avg(kor), 0) desc;
 
 
 --문3) 총점(tot), 평균(aver) 구하시오
-update sungjuk
-set tot=kor+eng+mat, aver=(kor+eng+mat)/3;
+update sungjuk set tot=kor+eng+mat, aver=(kor+eng+mat)/3;
 
 select * from sungjuk;
 
@@ -146,3 +145,196 @@ from sungjuk
 where aver>=80
 group by addr
 order by count(*);
+
+-- 풀이
+select addr, aver
+from sungjuk
+where aver>=80
+order by aver desc;
+
+select addr, count(*)   -- 4)
+from sungjuk            -- 1) 해석순서
+where aver>=80          -- 2)
+group by addr           -- 3)
+order by count(*);      -- 5)
+
+/////////////////////////////////////////////////////////////////////////////
+
+● [2차 그룹]
+
+-- 주소별 순으로 조회하시오
+select addr, kor, eng, mat from sungjuk order by addr, kor;
+
+-- 주소별(1차) 그룹을 하고, 주소가 같다면 국어점수(2차)로 그룹화 하기
+select addr, kor
+from sungjuk
+group by addr, kor
+order by addr;
+
+select addr, kor, count(*)
+from sungjuk
+group by addr, kor
+order by addr;
+
+-- 1차 그룹(kor), 2차 그룹(eng), 3차 그룹(mat)
+select kor, eng, mat, count(*)
+from sungjuk
+group by kor, eng, mat
+order by kor, eng, mat;
+/////////////////////////////////////////////////////////////////////////////
+
+● [having 조건절]
+- group by 와 같이 사용하는 조건절
+- 그룹화를 하고 난 후에 조건절을 추가
+- 형식) having 조건절
+
+-- 주소별 인원수를 조회하시오
+select addr, count(*)
+from sungjuk
+group by addr;
+
+-- 주소별 인원수가 3인 행을 조회하시오
+select addr, count(*)
+from sungjuk
+group by addr
+having count(*)=3;
+
+-- 주소별 인원수가 3이상인 행을 조회하시오
+select addr, count(*)
+from sungjuk
+group by addr
+having count(*)>=3;
+
+
+--문5) 주소별 국어 평균값이 50이상 행을 조회하시오
+--    (단, 평균값은 소수점없이 반올림)
+
+1) 주소별 국어평균값 구하기
+select addr, avg(kor)
+from sungjuk
+group by addr;
+
+2) 국어평균값을 소수점에서 반올림하기
+select addr, round(avg(kor),0)
+from sungjuk
+group by addr;
+
+3) 2)의 결과에서 국어평균값이 50이상 조회하기
+select addr, round(avg(kor),0)
+from sungjuk
+group by addr
+having round(avg(kor),0)>=50;
+
+4) 3)의 결과에서 국어평균값을 내림차순으로 조회하기
+select addr, round(avg(kor),0)
+from sungjuk
+group by addr
+having round(avg(kor),0)>=50
+order by round(avg(kor),0) desc;
+
+5) 4)의 결과에서 국어평균값 칼럼명을 avg_kor로 변경하기
+select addr, round(avg(kor),0) as avg_kor
+from sungjuk
+group by addr
+having round(avg(kor),0)>=50
+order by round(avg(kor),0) desc;
+
+
+--문6) 평균(aver)이 70이상 행을 대상으로 주소별 인원수를 구한 후
+--     그 인원수가 2미만 행을 인원수 순으로 조회하시오
+
+1) 전체 행 조회
+select * from sungjuk;
+
+2) 평균(aver)값이 70이상 행 조회
+select *
+from sungjuk
+where aver>=70;
+
+3) 2)의 결과에서 주소별 인원수를 구하시오
+select addr, count(*)
+from sungjuk
+where aver>=70
+group by addr;
+
+4) 3)의 결과에서 그 인원수가 2미만 행 조회
+select addr, count(*)
+from sungjuk
+where aver>=70
+group by addr
+having count(*)<2;
+
+5) 4)의 결과를 인원수 순으로 조회
+select addr, count(*) as cnt
+from sungjuk
+where aver>=70
+group by addr
+having count(*)<2
+order by cnt;       -- order by count(*) 써도 됨
+///////////////////////////////////////////////////////////////////////
+
+● [CASE WHEN - THEN END 구문]
+형식)
+     CASE WHEN 조건1 THEN 조건만족시 값1
+          WHEN 조건2 THEN 조건만족시 값2
+          WHEN 조건3 THEN 조건만족시 값3
+             ...
+          ELSE 값
+     END 결과컬럼명
+
+
+-- 이름, 주소를 조회하시오
+select uname, addr from sungjuk;
+
+-- 이름, 주소를 조회하시오 (단, 주소는 한글로 바꿔서 조회)
+select uname, addr, case when addr='Seoul' then '서울'
+                        when addr='Jeju' then '제주'
+                        when addr='Busan' then '부산'
+                        when addr='Suwon' then '수원'
+                    end as juso
+from sungjuk;
+
+
+--문7)이름, 국어, 학점을 조회하시오
+      학점 : 국어점수 90이상 'A학점'
+                    80이상 'B학점'
+                    70이상 'C학점'
+                    60이상 'D학점'
+                    나머지 'F학점'
+                    
+1)
+select uname, kor, case when kor>=90 then 'A학점'
+                        when kor>=80 then 'B학점'
+                        when kor>=70 then 'C학점'
+                        when kor>=60 then 'D학점'
+                        else 'F학점'
+                    end as grade
+from sungjuk;
+
+2) 칼럼명 한글 가능
+select uname, kor, case when kor>=90 then 'A학점'
+                        when kor>=80 then 'B학점'
+                        when kor>=70 then 'C학점'
+                        when kor>=60 then 'D학점'
+                        else 'F학점'
+                    end as 국어학점
+from sungjuk;
+
+3) between ~ and 연산자
+select uname, kor, case when kor between 90 and 100 then 'A학점'
+                        when kor between 80 and 89 then 'B학점'
+                        when kor between 70 and 79 then 'C학점'
+                        when kor between 60 and 69 then 'D학점'
+                        else 'F학점'
+                    end as 국어학점     
+from sungjuk;
+
+4) 국어학점 순으로 정렬하기
+select uname, kor, case when kor between 90 and 100 then 'A학점'
+                        when kor between 80 and 89 then 'B학점'
+                        when kor between 70 and 79 then 'C학점'
+                        when kor between 60 and 69 then 'D학점'
+                        else 'F학점'
+                    end as 국어학점     
+from sungjuk
+order by 국어학점;
