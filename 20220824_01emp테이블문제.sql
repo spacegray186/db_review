@@ -479,12 +479,43 @@ order by 근속연수 desc;
       예) 박지성의 근속연수 : 20년
 select ename || '의 근속연수 : ' || trunc((sysdate-hiredate)/365) || '년' as 근속연수 from emp;
 
+-- 풀이
+select ename, hiredate from emp order by hiredate;
+select ename, sysdate-hiredate from emp order by hiredate;
+select ename, (sysdate-hiredate)/365 from emp order by hiredate;
+select ename, trunc((sysdate-hiredate)/365) from emp order by hiredate;
+select ename || '의 근속연수 ' || trunc((sysdate-hiredate)/365) || '년' from emp order by hiredate;
+select ename || '의 근속연수 ' || trunc((sysdate-hiredate)/365) || '년' as 근속연수 from emp order by hiredate;
+
 
 문42) 손흥민의 근속연수와 동일한 행을 조회(이름, 근속연수)하시오
 select ename, trunc((sysdate-hiredate)/365) as 근속연수
 from emp
 where trunc((sysdate-hiredate)/365) = (select trunc((sysdate-hiredate)/365) from emp where ename='손흥민')
 and ename!='손흥민';
+
+-- 풀이
+
+-- 손흥민 조회하기
+select * from emp where ename='손흥민';
+
+-- 손흥민의 근속연수 구하기
+select hiredate from emp where ename='손흥민';
+select sysdate-hiredate from emp where ename='손흥민';
+select (sysdate-hiredate)/365 from emp where ename='손흥민';
+select trunc((sysdate-hiredate)/365) from emp where ename='손흥민';    -- 20
+
+select ename, hiredate, trunc((sysdate-hiredate)/365)
+from emp
+where trunc((sysdate-hiredate)/365)=20;
+
+select ename, hiredate, trunc((sysdate-hiredate)/365)
+from emp
+where trunc((sysdate-hiredate)/365)=(
+                                        select trunc((sysdate-hiredate)/365)
+                                        from emp
+                                        where ename='손흥민'
+                                    );
 
 
 문43) 입사한지 만 15년 이상된 사람에 한해 현재연봉에서 10% 인상시켰을 때 
@@ -495,8 +526,86 @@ from emp
 where trunc((sysdate-hiredate)/365)>=15
 order by (sal*12+nvl(comm,0))*1.1 desc;
 
+-- 풀이
+
+-- 입사한지 만 15년 이상 조회하기
+select ename, hiredate, sal
+from emp
+where trunc((sysdate-hiredate)/365) >= 15;
+
+-- 현재연봉 구하기
+select ename, hiredate, sal, sal*12+comm
+from emp
+where trunc((sysdate-hiredate)/365) >= 15;
+
+-- 현재연봉 구하기(단, 커미션이 없으면 0으로 바꿔서 계산)
+select ename, hiredate, sal, sal*12+nvl(comm, 0)
+from emp
+where trunc((sysdate-hiredate)/365) >= 15;
+
+select ename, hiredate, sal, sal*12+nvl(comm, 0) as 현재연봉
+from emp
+where trunc((sysdate-hiredate)/365) >= 15;
+
+-- 현재연봉에서 10% 인상된 금액
+select ename, hiredate, sal
+    , sal*12+nvl(comm, 0) as 현재연봉
+    , (sal*12+nvl(comm, 0))*0.1 as 인상된금액
+from emp
+where trunc((sysdate-hiredate)/365) >= 15;
+
+-- 현재연봉 + 인상된금액 = 최종연봉 구하기
+select ename, hiredate, sal
+    , sal*12+nvl(comm, 0) as 현재연봉
+    , (sal*12+nvl(comm, 0))*0.1 as 인상된금액
+    , (sal*12+nvl(comm, 0)) + ((sal*12+nvl(comm, 0))*0.1) as 최종연봉   -- (현재연봉)+(인상된금액)
+from emp
+where trunc((sysdate-hiredate)/365) >= 15;
+
+-- 최종연봉 소수점없이 반올림
+select ename, hiredate, sal
+    , sal*12+nvl(comm, 0) as 현재연봉
+    , (sal*12+nvl(comm, 0))*0.1 as 인상된금액
+    , round((sal*12+nvl(comm, 0)) + ((sal*12+nvl(comm, 0))*0.1), 0) as 최종연봉   -- (현재연봉)+(인상된금액)
+from emp
+where trunc((sysdate-hiredate)/365) >= 15;
+
+-- 최종연봉 내림차순 정렬하기
+select ename, hiredate, sal
+    , trunc((sysdate-hiredate)/365) as 근속연수
+    , sal*12+nvl(comm, 0) as 현재연봉
+    , (sal*12+nvl(comm, 0))*0.1 as 인상된금액
+    , round((sal*12+nvl(comm, 0)) + ((sal*12+nvl(comm, 0))*0.1), 0) as 최종연봉   -- (현재연봉)+(인상된금액)
+from emp
+where trunc((sysdate-hiredate)/365) >= 15
+order by 최종연봉 desc;
+
 
 문44) 입사연도가 짝수인 직원들의 급여의 평균을 job별로 출력하시오
+select job, avg(sal)
+from emp
+where mod(extract(year from hiredate),2)=0
+group by job;
+
 select job, avg(sal) as avg from emp
-where mod((substr(hiredate,0,2)),2)=0
+where mod((substr(hiredate,1,2)),2)=0
+group by job;
+
+-- 풀이
+
+-- 직급, 입사일 조회하기
+select job, hiredate from emp;
+
+-- 입사일에서 연도 추출하기
+select hiredate, extract(YEAR from hiredate) from emp;
+
+-- 짝수연도 추출하기
+select job, hiredate, extract(YEAR from hiredate)
+from emp
+where mod(extract(YEAR from hiredate), 2)=0     -- mod() 나머지 연산자
+
+-- 직급별 급여의 평균 구하기
+select job, avg(sal)
+from emp
+where mod(extract(YEAR from hiredate), 2)=0
 group by job;
