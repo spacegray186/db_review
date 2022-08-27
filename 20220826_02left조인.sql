@@ -1,36 +1,36 @@
 
-¡Ü [Å×ÀÌºí Á¶ÀÎÀÇ Á¾·ù] 
+â— [í…Œì´ë¸” ì¡°ì¸ì˜ ì¢…ë¥˜] 
 
 1) inner join
-   - µÎ Å×ÀÌºí¿¡ °øÅëÀ¸·Î Á¸ÀçÇÏ´Â Ä®·³À» ÀÌ¿ëÇÏ´Â ¹æ½Ä
-   - inner »ý·«°¡´É
-   - ±âº»
+   - ë‘ í…Œì´ë¸”ì— ê³µí†µìœ¼ë¡œ ì¡´ìž¬í•˜ëŠ” ì¹¼ëŸ¼ì„ ì´ìš©í•˜ëŠ” ë°©ì‹
+   - inner ìƒëžµê°€ëŠ¥
+   - ê¸°ë³¸
    
 2) left outer join
-   - ¿ÞÂÊ Å×ÀÌºíÀÇ ¸ðµç µ¥ÀÌÅÍ¿Í ¿À¸¥ÂÊ Å×ÀÌºíÀÇ µ¿ÀÏ µ¥ÀÌÅÍ¸¦ ÃßÃâ
-   - outer »ý·«°¡´É
+   - ì™¼ìª½ í…Œì´ë¸”ì˜ ëª¨ë“  ë°ì´í„°ì™€ ì˜¤ë¥¸ìª½ í…Œì´ë¸”ì˜ ë™ì¼ ë°ì´í„°ë¥¼ ì¶”ì¶œ
+   - outer ìƒëžµê°€ëŠ¥
    
 3) right outer join
-   - ¿À¸¥ÂÊ Å×ÀÌºíÀÇ ¸ðµç µ¥ÀÌÅÍ¿Í ¿ÞÂÊ Å×ÀÌºíÀÇ µ¿ÀÏ µ¥ÀÌÅÍ¸¦ ÃßÃâ
-   - outer »ý·«°¡´É
+   - ì˜¤ë¥¸ìª½ í…Œì´ë¸”ì˜ ëª¨ë“  ë°ì´í„°ì™€ ì™¼ìª½ í…Œì´ë¸”ì˜ ë™ì¼ ë°ì´í„°ë¥¼ ì¶”ì¶œ
+   - outer ìƒëžµê°€ëŠ¥
    
 
-¡Ü [left join °ú right join]
+â— [left join ê³¼ right join]
 
--- ÇÐ»ýÅ×ÀÌºíÀÇ ¸ðµç ÇàÀ» °¡Á®¿À°í, ¼ö°­Å×ÀÌºí¿¡¼­ ÇÐ¹øÀÌ ÀÏÄ¡ÇÏ´Â Çà¸¸ °¡Á®¿À±â
+-- í•™ìƒí…Œì´ë¸”ì˜ ëª¨ë“  í–‰ì„ ê°€ì ¸ì˜¤ê³ , ìˆ˜ê°•í…Œì´ë¸”ì—ì„œ í•™ë²ˆì´ ì¼ì¹˜í•˜ëŠ” í–‰ë§Œ ê°€ì ¸ì˜¤ê¸°
 select ST.*, SU.*
 from tb_student ST left join tb_sugang SU
 on ST.hakno=SU.hakno;
 
 
-¹®1)left join¸¦ ÀÌ¿ëÇØ¼­ ¼ö°­½ÅÃ»À» ÇÏÁö ¾ÊÀº ÇÐ¹ø, ÀÌ¸§, °ú¸ñÄÚµå Á¶È¸ÇÏ½Ã¿À
+ë¬¸1)left joinë¥¼ ì´ìš©í•´ì„œ ìˆ˜ê°•ì‹ ì²­ì„ í•˜ì§€ ì•Šì€ í•™ë²ˆ, ì´ë¦„, ê³¼ëª©ì½”ë“œ ì¡°íšŒí•˜ì‹œì˜¤
 select ST.hakno, ST.uname, SU.hakno, SU.gcode
 from tb_student ST left join tb_sugang SU
 on ST.hakno=SU.hakno
 where SU.hakno is null;
 
 
-¹®2)right join¸¦ ÀÌ¿ëÇØ¼­ ¼ö°­½ÅÃ»À» ÇÏÁö ¾ÊÀº ÇÐ¹ø, ÀÌ¸§, °ú¸ñÄÚµå Á¶È¸ÇÏ½Ã¿À
+ë¬¸2)right joinë¥¼ ì´ìš©í•´ì„œ ìˆ˜ê°•ì‹ ì²­ì„ í•˜ì§€ ì•Šì€ í•™ë²ˆ, ì´ë¦„, ê³¼ëª©ì½”ë“œ ì¡°íšŒí•˜ì‹œì˜¤
 select SU.hakno, SU.gcode, ST.hakno, ST.uname
 from tb_sugang SU right join tb_student ST
 on SU.hakno=ST.hakno
@@ -39,8 +39,8 @@ where SU.hakno is null;
 ///////////////////////////////////////////////////////////////////////////////
 
 
-¡Ü [ (+)±âÈ£¸¦ ÀÌ¿ëÇÑ Å×ÀÌºí Á¶ÀÎ ] 
-   (+)±âÈ£´Â ÀÏÄ¡µÇÁö ¾Ê´Â ÇàÀÌ Á¸ÀçÇÏ´Â ¾ÊÀº ÂÊ¿¡ ºÙÀÎ´Ù
+â— [ (+)ê¸°í˜¸ë¥¼ ì´ìš©í•œ í…Œì´ë¸” ì¡°ì¸ ] 
+   ëª¨ë“  í–‰ì´ ì¶œë ¥ë˜ëŠ” í…Œì´ë¸”ì˜ ë°˜ëŒ€íŽ¸ í…Œì´ë¸”ì˜ ì˜†ì— (+) ê¸°í˜¸ë¥¼ ë¶™ì—¬ ìž‘ì„±í•˜ë©´ ëœë‹¤
    
 select ST.hakno, ST.uname, SU.gcode, SU.hakno
 from tb_student ST, tb_sugang SU
