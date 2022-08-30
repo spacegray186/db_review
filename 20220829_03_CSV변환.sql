@@ -39,7 +39,7 @@ where zipaddress like '서울특별시 강남구%';
 //////////////////////////////////////////////////////////////////////////////
 
 
-문2) 한국교원대학교_초중등학교위치.csv를 변환해서 테이블에 저장하시오 (11874행)
+문2) 한국교원대학교_초중등학교위치.csv를 변환해서 테이블에 저장하시오 (11873행)
 
 -- 비어있는 값(null)을 찾으시오
 
@@ -67,6 +67,41 @@ where scaddress is null;    -- 다산한강중학교
 
 
 -- 새로 하기
+
+drop table school;
+
 create table school (
-    schoolid    varchar2(10)    --학교ID
+    schoolid    varchar2(10)   --학교ID
+  , schoolname  varchar2(255)  --학교명
+  , schoolgubun varchar2(20)   --학교급구분
+  , schooladdr  varchar2(255)  --소재지도로명주소
+  , cdate       date           --생성일자 (형식 YYYY-MM-DD)
+  , udate       date           --변경일자 (형식 YYYY-MM-DD)
+  , latitude    number(20,10)  --위도
+  , longitude   number(20,10)  --경도
 );
+
+commit;
+select count(*) from school;
+select * from school;
+
+select * from school where schooladdr is null;
+
+-- 비어있는 값 찾아보기
+select * from school where schoolid is null;
+select * from school where schoolname is null;
+select * from school where schoolgubun is null;
+select * from school where schooladdr is null;      --B000027204행 비어 있음
+select * from school where cdate is null;
+select * from school where udate is null;
+select * from school where latitude is null;
+select * from school where longitude is null;
+
+
+과제) 각 시도별 초등학교, 중학교 개수를 구하시오
+select substr(schooladdr,1,3) as 시도별, schoolgubun, count(*)
+from school
+group by substr(schooladdr,1,3), schoolgubun
+having schoolgubun in ('초등학교', '중학교')
+order by 시도별, schoolgubun desc;
+
