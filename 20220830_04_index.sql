@@ -1,32 +1,32 @@
 
-¡Ü [index »öÀÎ]
-  - ´õ ºü¸¥ °Ë»öÀ» À§ÇÑ ÀÎµ¦½º
-  - µ¥ÀÌÅÍ¸¦ ºü¸£°Ô Ã£À» ¼ö ÀÖ´Â ¼ö´Ü
-  - Å×ÀÌºí¿¡ ´ëÇÑ Á¶È¸ ¼Óµµ¸¦ ³ô¿© ÁÖ´Â ÀÚ·á±¸Á¶
-  - PKÄ®·³Àº ÀÚµ¿À¸·Î ÀÎµ¦½º »ı¼ºµÈ´Ù
+â— [index ìƒ‰ì¸]
+  - ë” ë¹ ë¥¸ ê²€ìƒ‰ì„ ìœ„í•œ ì¸ë±ìŠ¤
+  - ë°ì´í„°ë¥¼ ë¹ ë¥´ê²Œ ì°¾ì„ ìˆ˜ ìˆëŠ” ìˆ˜ë‹¨
+  - í…Œì´ë¸”ì— ëŒ€í•œ ì¡°íšŒ ì†ë„ë¥¼ ë†’ì—¬ ì£¼ëŠ” ìë£Œêµ¬ì¡°
+  - PKì¹¼ëŸ¼ì€ ìë™ìœ¼ë¡œ ì¸ë±ìŠ¤ ìƒì„±ëœë‹¤
   
-¡Ü [ÀÎµ¦½º ¹æ½Ä]  
+â— [ì¸ë±ìŠ¤ ë°©ì‹]  
   - full scan
-    Ã³À½ºÎÅÍ ³¡±îÁö ÀÏÀÏÀÌ °Ë»çÇÏ´Â ¹æ¹ı. Àü¼öÁ¶»ç        
+    ì²˜ìŒë¶€í„° ëê¹Œì§€ ì¼ì¼ì´ ê²€ì‚¬í•˜ëŠ” ë°©ë²•. ì „ìˆ˜ì¡°ì‚¬        
     
   - index range scan
-    ÀÌ¸§ÀÌ ¿©·¯°³ÀÎ °æ¿ì ¸ñÂ÷¸¦ Ã£¾Æ¼­ ÆäÀÌÁö¸¦ Ã£¾Æ°¨
-    ÈÎ¾À ºü¸§. º°µµÀÇ ¸Ş¸ğ¸®°¡ ÀÖ¾î¾ß ÇÔ.
+    ì´ë¦„ì´ ì—¬ëŸ¬ê°œì¸ ê²½ìš° ëª©ì°¨ë¥¼ ì°¾ì•„ì„œ í˜ì´ì§€ë¥¼ ì°¾ì•„ê°
+    í›¨ì”¬ ë¹ ë¦„. ë³„ë„ì˜ ë©”ëª¨ë¦¬ê°€ ìˆì–´ì•¼ í•¨.
     
   - index unique scan
-    ÇĞ¹øÀº 1°³¸¸ Á¸ÀçÇÔ. À¯ÀÏÇÑ °ª
+    í•™ë²ˆì€ 1ê°œë§Œ ì¡´ì¬í•¨. ìœ ì¼í•œ ê°’
 
-¡Ü [ÀÎµ¦½º »ı¼º]   
-- Çü½Ä) create index ÀÎµ¦½º¸í on Å×ÀÌºí¸í(Ä®·³¸í)
+â— [ì¸ë±ìŠ¤ ìƒì„±]   
+- í˜•ì‹) create index ì¸ë±ìŠ¤ëª… on í…Œì´ë¸”ëª…(ì¹¼ëŸ¼ëª…)
   
   
-¡Ü [ÀÎµ¦½º »èÁ¦]  
-- Çü½Ä) drop index ÀÎµ¦½º¸í
+â— [ì¸ë±ìŠ¤ ì‚­ì œ]  
+- í˜•ì‹) drop index ì¸ë±ìŠ¤ëª…
 ////////////////////////////////////////////////////////////////////////
 
-¡Ü [¿¬½À 1] - PK°¡ ¾ø´Â Å×ÀÌºí
+â— [ì—°ìŠµ 1] - PKê°€ ì—†ëŠ” í…Œì´ë¸”
 
---Å×ÀÌºí»ı¼º
+--í…Œì´ë¸”ìƒì„±
 create table emp2(
   id        number(5)    
   ,name     varchar2(25)
@@ -35,29 +35,29 @@ create table emp2(
   ,dept_id  number(7)
 );
 
---ÇàÃß°¡ 
+--í–‰ì¶”ê°€ 
 insert into emp2(id,name) values (10,'kim');
 insert into emp2(id,name) values (20,'park');
 insert into emp2(id,name) values (30,'hong');
 commit;
 
---ÀÎµ¦½º »ı¼º Àü
-select * from emp2 where name='hong';   --Ä¿¼­ ¿©±â¿¡ ³õ°í F10
---F10 °èÈ¹¼³¸í º¸±â ¡æ full scan cost 2
+--ì¸ë±ìŠ¤ ìƒì„± ì „
+select * from emp2 where name='hong';   --ì»¤ì„œ ì—¬ê¸°ì— ë†“ê³  F10
+--F10 ê³„íšì„¤ëª… ë³´ê¸° â†’ full scan cost 2
 
 
---ÀÎµ¦½º »ı¼º ÈÄ (»öÀÎÆäÀÌÁö°¡ º°µµ·Î »ı¼ºµÊ)
+--ì¸ë±ìŠ¤ ìƒì„± í›„ (ìƒ‰ì¸í˜ì´ì§€ê°€ ë³„ë„ë¡œ ìƒì„±ë¨)
 create index emp2_name_idx on emp2(name);
-drop index emp2_name_idx on emp2(name);     --ÀÎµ¦½º »èÁ¦
+drop index emp2_name_idx on emp2(name);     --ì¸ë±ìŠ¤ ì‚­ì œ
 
-select * from emp2 where name='kim';    --Ä¿¼­ ¿©±â¿¡ ³õ°í F10
---F10 °èÈ¹¼³¸í º¸±â ¡æ full scan cost 2
+select * from emp2 where name='kim';    --ì»¤ì„œ ì—¬ê¸°ì— ë†“ê³  F10
+--F10 ê³„íšì„¤ëª… ë³´ê¸° â†’ full scan cost 2
 
 //////////////////////////////////////////////////////////////////////////////
 
-¡Ü [¿¬½À 2] - PK°¡ ÀÖ´Â Å×ÀÌºí
+â— [ì—°ìŠµ 2] - PKê°€ ìˆëŠ” í…Œì´ë¸”
 
---PK´Â ÀÎµ¦½º°¡ ÀÚµ¿À¸·Î »ı¼ºµÇ¸é¼­ Á¤·ÄµÈ´Ù
+--PKëŠ” ì¸ë±ìŠ¤ê°€ ìë™ìœ¼ë¡œ ìƒì„±ë˜ë©´ì„œ ì •ë ¬ëœë‹¤
 
 create table emp3 (
    no    number       primary key
@@ -65,14 +65,14 @@ create table emp3 (
   ,sal  number
 );
 
-select * from emp3 where no=3;  --Ä¿¼­ ¿©±â¿¡ ³õ°í F10
---F10 °èÈ¹¼³¸í º¸±â ¡æ unique scan, cost 1
+select * from emp3 where no=3;  --ì»¤ì„œ ì—¬ê¸°ì— ë†“ê³  F10
+--F10 ê³„íšì„¤ëª… ë³´ê¸° â†’ unique scan, cost 1
 
 /////////////////////////////////////////////////////////////////////////////
 
 
--- ¿¬½À3)
-    100¸¸°ÇÀÇ ·¹ÄÚµå ´ë»óÀ¸·Î cost ºñ±³
+-- ì—°ìŠµ3)
+    100ë§Œê±´ì˜ ë ˆì½”ë“œ ëŒ€ìƒìœ¼ë¡œ cost ë¹„êµ
 create table emp4(
    no     number
   ,name   varchar2(10)
@@ -80,14 +80,14 @@ create table emp4(
 );
 
 
-ÇÁ·Î½ÃÀú¸¦ ÀÌ¿ëÇØ¼­ 100¸¸Çà Ãß°¡ÇÏ±â ##################################
-declare     --¼±¾ğ¹®
-    --º¯¼ö¼±¾ğ
-    i       number      := 1;        --iº¯¼ö¿¡ 1 ´ëÀÔ := ¿¬»êÀÚ
+í”„ë¡œì‹œì €ë¥¼ ì´ìš©í•´ì„œ 100ë§Œí–‰ ì¶”ê°€í•˜ê¸° ##################################
+declare     --ì„ ì–¸ë¬¸
+    --ë³€ìˆ˜ì„ ì–¸
+    i       number      := 1;        --ië³€ìˆ˜ì— 1 ëŒ€ì… := ì—°ì‚°ì
     name    varchar(20) := 'kim';
     sal     number      := 0;
 begin
-    -- T-SQL¹®
+    -- T-SQLë¬¸
     while i<=1000000 loop
         if i mod 2 = 0 then
             name := 'kim' || to_char(i);
@@ -103,7 +103,7 @@ begin
             sal := 250;
         end if;
         
-        insert into emp4(no, name, sal) values (i, name, sal);  --ÇàÃß°¡
+        insert into emp4(no, name, sal) values (i, name, sal);  --í–‰ì¶”ê°€
         i := i+1;
     
     end loop;
@@ -115,8 +115,8 @@ select count(*) from emp4;
 select * from emp4;
 
 
---1)ÀÎµ¦½º¸¦ »ç¿ëÇÏÁö ¾ÊÀº °æ¿ì
-select * from emp4 where name='kim466'; --½ÇÇàÇÏ°í ³­ ÈÄ, ¿©±â¿¡ Ä¿¼­ ³õ°í F10 °èÈ¹¼³¸í
+--1)ì¸ë±ìŠ¤ë¥¼ ì‚¬ìš©í•˜ì§€ ì•Šì€ ê²½ìš°
+select * from emp4 where name='kim466'; --ì‹¤í–‰í•˜ê³  ë‚œ í›„, ì—¬ê¸°ì— ì»¤ì„œ ë†“ê³  F10 ê³„íšì„¤ëª…
                                         --FULL scan, COST 904
 
 select * from emp4 where no=466;        -- FULL scan, COST 903
@@ -124,21 +124,22 @@ select * from emp4 where no=466;        -- FULL scan, COST 903
 select * from emp4 where sal>300;       -- FULL scan, COST 906
 
 
---2)ÀÎµ¦½º¸¦ »ç¿ëÇÑ °æ¿ì
+--2)ì¸ë±ìŠ¤ë¥¼ ì‚¬ìš©í•œ ê²½ìš°
 
---nameÄ®·³À» ±âÁØÀ¸·Î ÀÎµ¦½º »ı¼º
+--nameì¹¼ëŸ¼ì„ ê¸°ì¤€ìœ¼ë¡œ ì¸ë±ìŠ¤ ìƒì„±
 create index emp4_name_idx on emp4(name);
 
-select * from emp4 where name='kim466'; --½ÇÇàÇÏ°í ³­ ÈÄ, ¿©±â¿¡ Ä¿¼­ ³õ°í F10 °èÈ¹¼³¸í
+select * from emp4 where name='kim466'; --ì‹¤í–‰í•˜ê³  ë‚œ í›„, ì—¬ê¸°ì— ì»¤ì„œ ë†“ê³  F10 ê³„íšì„¤ëª…
                                         --RANGE SCAN, COST 3
 
 
---nameÄ®·³°ú salÄ®·³À» ±âÁØÀ¸·Î ÀÎµ¦½º »ı¼º
+--nameì¹¼ëŸ¼ê³¼ salì¹¼ëŸ¼ì„ ê¸°ì¤€ìœ¼ë¡œ ì¸ë±ìŠ¤ ìƒì„±
 create index emp4_name_sal_idx on emp4(name, sal);
 
 select * from emp4 where name='kim466' and sal>200; --RANGE SCAN, COST 3
 
 
--- ÀÎµ¦½º µ¥ÀÌÅÍ »çÀü
+-- ì¸ë±ìŠ¤ ë°ì´í„° ì‚¬ì „
 select * from user_indexes;
 select * from user_indexes where index_name like 'EMP4%';
+
