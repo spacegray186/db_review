@@ -142,4 +142,3 @@ select * from emp4 where name='kim466' and sal>200; --RANGE SCAN, COST 3
 -- 인덱스 데이터 사전
 select * from user_indexes;
 select * from user_indexes where index_name like 'EMP4%';
-
